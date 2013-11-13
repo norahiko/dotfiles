@@ -9,6 +9,7 @@ function links {
 }
 
 links .vimrc         vim/vimrc
+links .ctags         vim/ctags
 links .vim           vim
 
 links .profile       zsh/profile
