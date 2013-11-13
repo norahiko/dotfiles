@@ -1,0 +1,561 @@
+" -----------------------------------------------------------------------
+"
+" NeoBundle
+"
+" -----------------------------------------------------------------------
+
+" runtimepath  -----------------------------------
+if has('vim_starting')
+    set runtimepath+=$GOROOT/misc/vim
+    set runtimepath+=$HOME/node_modules/typescript-tools
+    exe "set runtimepath+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
+
+    filetype off
+    set runtimepath+=~/.vim/neobundle.vim
+    call neobundle#rc(expand('~/.vim/bundle/'))
+endif
+
+" file------------------------------
+NeoBundle 'unite.vim'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'snipMate'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'taglist.vim'
+"NeoBundle 'Shougo/vimfiler.vim'
+
+" run------------------------------
+NeoBundle 'Shougo/vimproc'
+NeoBundle 'thinca/vim-quickrun'
+"NeoBundle 'errormarker.vim'
+
+" edit------------------------------
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'mattn/emmet-vim'
+NeoBundle 'Shougo/neocomplcache.vim'
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'Align'
+NeoBundle 'tyru/operator-camelize.vim'
+NeoBundle 'YankRing.vim'
+
+" operator --------------------------
+NeoBundle 'operator-user'
+NeoBundle 'rhysd/vim-operator-surround'
+NeoBundle 'tyru/operator-html-escape.vim'
+
+" lang------------------------------
+NeoBundle 'klen/python-mode'
+NeoBundle 'othree/html5.vim'
+NeoBundle 'leafgarland/typescript-vim'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'tpope/vim-markdown'
+"NeoBundle 'jdonaldson/vaxe'
+"NeoBundle 'digitaltoad/vim-jade'
+"NeoBundle 'vim-scripts/Dart.git'
+"NeoBundle 'groenewege/vim-less'
+"NeoBundle 'derekwyatt/vim-scala.git'
+
+" style------------------------------
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'jacquesbh/vim-showmarks'
+NeoBundle 'quickhl.vim'
+NeoBundle 'airblade/vim-gitgutter'
+
+
+" -----------------------------------------------------------------------
+"
+" Vim組み込みの設定
+"
+" -----------------------------------------------------------------------
+
+colorscheme jellybeans
+set guifont=Bitstream_Vera_Sans_Mono_11
+filetype plugin indent on
+
+"キーボードショートカット-----------------------------------
+let mapleader = ","
+
+noremap <silent> <F11> <ESC>:QuickRun<CR>
+inoremap <silent> <F11> <ESC>:QuickRun<CR>
+
+noremap <silent> <C-T> :tabnew<CR>
+"inoremap <silent> <C-T> <ESC>:tabnew<CR>
+
+noremap <silent> <F5> :e %<CR>
+inoremap <silent> <F6> <ESC>:e %<CR>
+
+noremap <silent> <C-S> :w<CR>
+inoremap <silent> <C-S> <ESC>:w<CR>
+
+" 行末の空白を削除
+noremap ,s :%s/\s\+$//<CR>
+
+" よく打ち間違えるため
+noremap K k
+noremap ; :
+
+" 折り返しをトグル
+noremap <Leader>w :set wrap!<CR>
+
+" ハイライトを非表示
+noremap <Leader>n :nohl<CR>
+
+" ctags
+noremap <C-]> g<C-]>
+noremap <C-p> :pop<CR>
+noremap go g'
+set tags=./tags,../tags,/home/norahiko/.tags
+
+" スクロール
+inoremap <C-d> <ESC><C-d>
+inoremap <C-u> <ESC><C-u>
+inoremap <C-w> <ESC><C-w>
+
+" 検索箇所を真ん中に
+noremap * *zz
+noremap # #zz
+noremap g* g*zz
+noremap g# g#zz
+
+" オムニ補完
+imap <C-N> <C-X><C-O>
+
+" show-marks
+noremap <Leader>m :DoShowMark<CR>
+
+noremap <Leader>f :NERDTree<CR>
+
+autocmd QuickFixCmdPost *grep* cwindow
+
+" Git gutter
+nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
+nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
+
+"operator----------------------------------------
+map <Leader>u <Plug>(operator-camelize)
+map <Leader>U <Plug>(operator-decamelize)
+
+nmap <Leader>h <Plug>(quickhl-toggle)
+xmap <Leader>h <Plug>(quickhl-toggle)
+nmap <Leader>H <Plug>(quickhl-reset)
+xmap <Leader>H <Plug>(quickhl-reset)
+nmap <Leader>j <Plug>(quickhl-match)
+
+vmap <silent>sa <Plug>(operator-surround-append)
+vmap <silent>sd <Plug>(operator-surround-delete)
+vmap <silent>sr <Plug>(operator-surround-replace)
+
+map <Leader>e <Plug>(operator-html-escape)
+map <Leader>E <Plug>(operator-html-unescape)
+
+"----------------------------------------------------
+" 基本的な設定
+"
+" インクリメンタル検索
+set incsearch
+" 検索にマッチしたすべてのテキストをハイライト
+set hlsearch
+" 検索時に大文字小文字を無視 (noignorecase:無視しない)
+set ignorecase
+" 大文字小文字の両方が含まれている場合は大文字小文字を区別
+set smartcase
+" 検索時にファイルの最後まで行ったら最初に戻る (nowrapscan:戻らない)
+set wrapscan
+" コマンド、検索パターンを100個まで履歴に残す
+set history=100
+
+set showtabline=1
+
+" ツールバーを削除
+set guioptions-=T
+set autoread
+
+set nocompatible
+"---------------------------------------------------------------------------
+" 編集に関する設定:
+"
+" 改行コードの自動認識
+set fileformats=unix,dos,mac
+" バックスペースでインデントや改行を削除できるようにする
+set backspace=indent,eol,start
+" 括弧入力時に対応する括弧を表示 (noshowmatch:表示しない)
+set showmatch
+" 対応する括弧の表示時間を2にする
+set matchtime=2
+" コマンドライン補完するときに強化されたものを使う(参照 :help wildmenu)
+set wildmenu
+" テキスト挿入中の自動折り返しを日本語に対応させる
+set formatoptions+=mM
+
+set autochdir
+
+hi link diffRemoved Comment
+hi link diffAdded Comment
+
+"---------------------------------------------------------------------------
+" vimdiffに関する設定:
+if &diff
+  map <leader>1 :diffget LOCAL<CR>
+  map <leader>2 :diffget BASE<CR>
+  map <leader>3 :diffget REMOTE<CR>
+endif
+
+
+"---------------------------------------------------------------------------
+" コマンドラインモード
+cnoremap <C-a> <Home>
+" 一文字戻る
+cnoremap <C-b> <Left>
+" カーソルの下の文字を削除
+cnoremap <C-d> <Del>
+" 行末へ移動
+cnoremap <C-e> <End>
+" 一文字進む
+cnoremap <C-f> <Right>
+" コマンドライン履歴を一つ進む
+cnoremap <C-n> <Down>
+" コマンドライン履歴を一つ戻る
+cnoremap <C-p> <Up>
+" 前の単語へ移動
+cnoremap <M-b> <S-Left>
+" 次の単語へ移動
+cnoremap <M-f> <S-Right>
+
+"---------------------------------------------------------------------------
+" インデント
+
+" 自動的にインデントする (noautoindent:インデントしない)
+set autoindent
+" タブが対応する空白の数
+set tabstop=4
+" タブやバックスペースの使用等の編集操作をするときに、タブが対応する空白の数
+set softtabstop=4
+" インデントの各段階に使われる空白の数
+set shiftwidth=4
+" タブをスペースに展開しない (expandtab:展開する)
+set expandtab
+"---------------------------------------------------------------------------
+" GUI固有ではない画面表示の設定:
+"
+
+set lines=50
+
+" 行番号を表示
+set number
+" ルーラーを表示 (noruler:非表示)
+set ruler
+set nowrap
+" 常にステータス行を表示 (詳細は:he laststatus)
+set laststatus=2
+" コマンドラインの高さ (Windows用gvim使用時はgvimrcを編集すること)
+set cmdheight=1
+" コマンドをステータス行に表示
+set showcmd
+" タイトルを表示
+set title
+" シンタックスハイライトを有効にする
+syntax on
+" 入力されているテキストの最大幅
+" (行がそれより長くなると、この幅を超えないように空白の後で改行される)を無効にする
+set textwidth=0
+
+" 全角スペースの表示
+if has('multi_byte_ime') || has('xim')
+  highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=red
+  highlight CursorIM guifg=NONE guibg=Purple
+endif
+
+match ZenkakuSpace /　/
+highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=red
+set list
+set listchars=tab:▸\ ,trail:-,extends:<,precedes:<
+highlight SpecialKey ctermbg=none ctermfg=darkgray
+
+" バッファを切替えてもundoの効力を失わない
+set hidden
+" 起動時のメッセージを表示しない
+set shortmess+=I
+
+"---------------------------------------------------------------------------
+" ファイル操作に関する設定
+"
+" スワップファイルを作成しない
+set noswapfile
+" スワップファイル用のディレクトリ
+"set directory=$HOME/vimbackup
+" バックアップファイルを作成しない
+set nobackup
+
+" ファイル名に大文字小文字の区別がないシステム用の設定:
+"   (例: DOS/Windows/MacOS)
+"
+if filereadable($VIM . '/vimrc') && filereadable($VIM . '/ViMrC')
+" tagsファイルの重複防止
+set tags=./tags,tags
+endif
+"クリップボードに関する設定o:
+set clipboard=unnamed,autoselect
+
+" 前回のカーソル位置を復元する
+autocmd BufReadPost *
+\ if line("'\"") > 0 && line ("'\"") <= line("$") |
+\   exe "normal! g'\"" |
+\ endif
+
+"自動折りたたみ設定
+set foldmethod=indent
+set foldlevel=1
+set nofoldenable
+
+" 個別のタブの表示設定をします
+function! GuiTabLabel()
+    " タブで表示する文字列の初期化をします
+    let l:label = ''
+
+    " タブに含まれるバッファ(ウィンドウ)についての情報をとっておきます。
+    let l:bufnrlist = tabpagebuflist(v:lnum)
+
+    " 表示文字列にバッファ名を追加します
+    " パスを全部表示させると長いのでファイル名だけを使います 詳しくは help fnamemodify()
+    let l:bufname = fnamemodify(bufname(l:bufnrlist[tabpagewinnr(v:lnum) - 1]), ':t')
+    " バッファ名がなければ No title としておきます。ここではマルチバイト文字を使わないほうが無難です
+    let l:label .= l:bufname == '' ? 'No title' : l:bufname
+
+    " タブ内にウィンドウが複数あるときにはその数を追加します(デフォルトで一応あるので)
+    let l:wincount = tabpagewinnr(v:lnum, '$')
+    if l:wincount > 1
+        let l:label .= '[' . l:wincount . ']'
+    endif
+
+    " このタブページに変更のあるバッファがるときには '[+]' を追加します(デフォルトで一応あるので)
+    for bufnr in l:bufnrlist
+        if getbufvar(bufnr, "&modified")
+            let l:label .= '[+]'
+            break
+        endif
+    endfor
+
+    " 表示文字列を返します
+    return l:label
+endfunction
+
+" guitablabel に上の関数を設定します
+" その表示の前に %N というところでタブ番号を表示させています
+set guitablabel=%N:\ %{GuiTabLabel()}
+
+
+
+" -----------------------------------------------------------------------
+"
+" プラグインの設定
+"
+" -----------------------------------------------------------------------
+
+" lightline.vim  ------------------------------------------------------------
+let g:lightline = {
+\ 'colorscheme': 'wombat',
+\ 'active': {
+\   'left': [ [ 'mode', 'paste', 'fugitive', 'gitgutter' ], [ 'readonly', 'filename', 'modified' ] ],
+\   'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'fileformat', 'fileencoding', 'filetype' ] ],
+\ },
+\ 'inactive': {
+\   'left':[ [ 'filename' ] ],
+\   'right': [ [ 'lineinfo' ], [ 'percent' ] ],
+\ },
+\ 'component_function': {
+\   'fugitive': 'FugitiveStatusLine',
+\   'gitgutter': 'GitGutterStatusLine',
+\ },
+\ 'separator': {'left': '⮀', 'right': '⮂'},
+\ 'subseparator': {'left': '⮁', 'right': '⮃'}
+\ }
+
+function! FugitiveStatusLine()
+    if exists("*fugitive#head")
+        let head = fugitive#head()
+        return strlen(head) ? '⭠ '.head : ''
+    endif
+    return ''
+endfunction
+
+function! GitGutterStatusLine()
+    if strlen(fugitive#head()) == 0
+        return ''
+    endif
+    if !exists('*GitGutterGetHunkSummary') || !get(g:, 'gitgutter_enabled', 0)
+        return ''
+    endif
+    let hunks = GitGutterGetHunkSummary()
+    let res = '✚ ' . hunks[0] . '  ➜ ' . hunks[1] . '  ✘ ' . hunks[2]
+    return res
+endfunction
+
+""" Unite.vim----------------------------------------------------------------
+
+" インサート／ノーマルどちらからでも呼び出せるようにキーマップ
+nnoremap <silent> <C-f> :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
+inoremap <silent> <C-f> <ESC>:<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
+nnoremap <silent> <C-b> :<C-u>Unite buffer file_mru<CR>
+inoremap <silent> <C-b> <ESC>:<C-u>Unite buffer file_mru<CR>
+"nnoremap <silent> <C-o> :<C-u>Unite -winwidth=40 -vertical outline<CR>
+"inoremap <silent> <C-o> <ESC>:<C-u>Unite -winwidth=40 -vertical outline<CR>
+"nnoremap <silent> <C-g> :<C-u>Unite -buffer-name=register register<CR>
+"inoremap <silent> <C-g> <ESC>:<C-u>Unite -buffer-name=register register<CR>
+
+" ブックマーク一覧の表示
+nnoremap <silent> ,bb :Unite bookmark<CR>
+nnoremap <silent> ,ba :UniteBookmarkAdd<CR>
+
+" unite.vim上でのキーマッピング
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()
+ " ESCキーを2回押すと終了する
+ nmap <silent><buffer> <ESC><ESC> :<C-u>q<CR>
+ imap <silent><buffer> <ESC><ESC> <ESC>:<C-u>q<CR>
+endfunction
+
+
+" YankRing -------------------------------------------
+let g:yankring_history_dir = "$HOME/.vim"
+
+" neocomplcache -------------------------------------------
+
+" Launches neocomplcache automatically on vim startup.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Use camel case completion.
+let g:neocomplcache_enable_camel_case_completion = 1
+" Use underscore completion.
+let g:neocomplcache_enable_underbar_completion = 1
+" Sets minimum char length of syntax keyword.
+let g:neocomplcache_min_syntax_length = 2
+" buffer file name pattern that locks neocomplcache. e.g. ku.vim or fuzzyfinder
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+
+" Define file-type dependent dictionaries.
+let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+    \ }
+
+" Define keyword, for minor languages
+if !exists('g:neocomplcache_keyword_patterns')
+  let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+" SuperTab like snippets behavior.
+"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
+
+" Enable omni completion. Not required if they are already set elsewhere in .vimrc
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"autocmd FileType javascript setlocal omnifunc=jscomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
+"autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
+"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+
+let g:jscomplete_use = ["dom", "es6th"]
+let g:node_usejscomplete = 1
+
+" Enable heavy omni completion, which require computational power and may stall the vim.
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
+let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+
+" emmet -------------------------------------------------------------------
+let g:user_emmet_leader_key = '<c-e>'
+
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+" snipMate  ----------------------------------------
+let g:snippets_dir = '$HOME/.vim/snippets/'
+
+" taglist
+let g:tlist_def_typescript_settings = 'typescript;c:class;m:member;f:function'
+
+" Python Mode ----------------------------------------
+"
+let g:pymode_lint_checker = "pyflakes"
+"自動的に上画面にドキュメントが表示されるのを停止する
+set completeopt-=preview
+
+
+" Align --------------------------------------------
+map <unique> <Leader>W= <Plug>AM_w=
+map <unique> <Leader>M= <Plug>AM_m=
+
+
+" Quickrun --------------------------------------------
+let g:quickrun_config = {
+\ "_" : {
+\   "outputter/buffer/split" : ":botright 8sp",
+\   "runner" : "vimproc",
+\   "runner/vimproc/updatetime" : 40
+\ },
+\ "jade": {
+\   "command": "jade",
+\   "exec": "jade %s -P"
+\ },
+\ "coffee": {
+\   "command": "coffee",
+\   "exec": ["%c -cp %s"],
+\   "output_filetype": "javascript",
+\   'tempfile'  : '%{tempname()}.js',
+\ },
+\ "runcoffee": {
+\   "command": "coffee",
+\   "exec": ["%c %s"],
+\ },
+\
+\ }
+
+" quickrun.vim が実行していない場合には <C-c> を呼び出す
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+
+" golang  ----------------------------------------------
+autocmd FileType go call s:go_config()
+
+function! s:go_config()
+    setlocal noexpandtab
+endfunction
+
+
+" fugitive  ----------------------------------------------
+command! Gs Gstatus
+command! Gd Gdiff
+
+augroup MyXML
+  autocmd!
+  autocmd Filetype xml,html inoremap <buffer> </ </<C-x><C-o>
+augroup END

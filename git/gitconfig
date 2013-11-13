@@ -1,0 +1,42 @@
+;/* vim: set filetype=gitconfig : */
+
+[user]
+    name = norahiko
+    email = norahiko.o@gmail.com
+
+[core]
+    excludesfile = ~/.gitignore
+    autocrlf = input
+    editor = vim
+    quotepath = false
+
+[merge]
+    tool = vimdiff
+    ff = false
+
+[branch]
+    autosetuprebase = always
+
+[color]
+    ui = auto
+    diff = auto
+    status = auto
+    branch = auto
+    grep = auto
+
+[push]
+    default = upstream
+
+[pull]
+    rebase = true
+
+[alias]
+    ci = commit
+    st = status
+    co = checkout
+    ls = ls-files
+    br = branch
+    cp = cherry-pick
+    uncommit = reset HEAD^
+    cam = commit --amend
+    gr = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'

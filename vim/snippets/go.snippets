@@ -1,0 +1,33 @@
+snippet main
+	package main
+
+	import (
+		"fmt"
+	)
+
+	func main() {
+
+	}
+snippet p
+	fmt.Println(${1})
+
+snippet f
+	fmt.Printf("${1}", ${2})
+
+snippet fori
+	for i := 0; i < ${1}; i++ {
+		${2}
+	}
+
+snippet forr
+	for ${1} := range ${2} {
+		${3}
+	}
+
+snippet handler
+	func handler(w http.ResponseWriter, r *http.Request) {
+		${1}
+	}
+
+
+

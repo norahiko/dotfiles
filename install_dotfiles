@@ -1,0 +1,24 @@
+#!/bin/zsh
+
+mkdir -p ~/lib
+mkdir -p ~/workspace
+
+function links {
+    rm -rf ~/$1
+    ln -s `pwd`/$2 ~/$1
+}
+
+links .vimrc         vim/vimrc
+links .vim           vim
+
+links .profile       zsh/profile
+links .zshrc         zsh/zshrc
+links .zsh           zsh
+links .gitconfig     git/gitconfig
+
+links bin/startup.py python/startup.py
+links bin/watchnow   tool/watchnow
+links bin/remotehead tool/remotehead
+
+links .Xmodmap       ubuntu/Xmodmap
+

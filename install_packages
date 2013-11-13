@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Add debian repository
+sudo add-apt-repository -y ppa:chris-lea/node.js
+
+sudo apt-get update
+
+sudo apt-get -y install bless build-essential ctags git mercurial nodejs nodejs-dev rlwrap ruby zsh \
+                        gimp gnome-shell inkscape tree ibus-mozc nautilus-open-terminal
+
+# install python packages
+suto apt-get -y install python2.7 python3 python-dev python3-dev python-pip python3-pip python-selenium python-sqlite
+sudo pip install  flask fabric ipython PyYAML sphinx virtualenv virtualenvwrapper
+
+# install oh-my-zsh
+wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
+
+# install gems
+sudo gem install rake sass
+
+# init virtualenv
+mkdir -p ~/.envs
+
+mkdir -p lib
+# install Node.js modules
+npm --prefix $NODE_PATH  install bower express grunt jade less mocha \
+                         chai jsdom typescript typescript-tools yo \
+mkdir -p ~/bin
+ln -sf ~/lib/node_modules/bower/bin/bower          ~/bin/bower
+ln -sf ~/lib/node_modules/grunt-cli/bin/grunt      ~/bin/grunt
+ln -sf ~/lib/node_modules/less/bin/lessc           ~/bin/lessc
+ln -sf ~/lib/node_modules/mocha/bin/mocha          ~/bin/mocha
+ln -sf ~/lib/node_modules/typescript/bin/tsc       ~/bin/tsc
+ln -sf ~/lib/node_modules/typescript-tools/bin/tss ~/bin/tsc
+ln -sf ~/lib/node_modules/yo/bin/yo                ~/bin/yo
+

@@ -1,0 +1,53 @@
+snippet l
+	console.log(${1});
+
+snippet a
+	assert.${1}
+
+snippet desc
+	describe("${1: title}", function() {
+		${2}
+	});
+
+snippet it
+	it("${1: title}", function() {
+		${2}
+	});
+
+snippet des
+	describe("${1}", function() {
+		${2}
+	});
+
+snippet imp
+	export import ${1:module} = module("$1");
+
+snippet j
+	console.log(JSON.stringify(${1}, null, 2));
+
+
+
+snippet ref
+	///<reference path="./${1}.ts"/>
+snippet refn
+	///<reference path="../node.d.ts"/>
+
+snippet cls
+	class ${1} {
+		constructor(${2}) {
+			${3}
+		}
+	}
+
+snippet cle
+	class ${1} extends ${2} {
+		constructor(${3}) {
+			${4}
+		}
+	}
+
+snippet con
+	constructor(${1}) {
+
+	}
+
