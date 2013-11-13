@@ -15,6 +15,7 @@ links .profile       zsh/profile
 links .zshrc         zsh/zshrc
 links .zsh           zsh
 links .gitconfig     git/gitconfig
+links .gitignore     git/gitignore
 
 links bin/startup.py python/startup.py
 links bin/watchnow   tool/watchnow
