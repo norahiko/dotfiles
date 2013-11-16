@@ -26,6 +26,8 @@ NeoBundle 'taglist.vim'
 " run------------------------------
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'add20/vim-conque'
+NeoBundle 'Shougo/vimshell'
 "NeoBundle 'errormarker.vim'
 
 " edit------------------------------
@@ -236,8 +238,6 @@ set expandtab
 "---------------------------------------------------------------------------
 " GUI固有ではない画面表示の設定:
 "
-
-set lines=50
 
 " 行番号を表示
 set number
