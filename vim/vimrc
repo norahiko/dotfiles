@@ -112,6 +112,10 @@ inoremap <C-d> <ESC><C-d>
 inoremap <C-u> <ESC><C-u>
 inoremap <C-w> <ESC><C-w>
 
+"Jumplistのキーを入れ替える
+noremap <c-o> <c-i>
+noremap <c-i> <c-o>
+
 " 検索箇所を真ん中に
 noremap * *zz
 noremap # #zz
