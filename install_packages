@@ -21,8 +21,9 @@ sudo gem install rake sass
 # init virtualenv
 mkdir -p ~/.envs
 
-mkdir -p lib
+mkdir -p ~/lib
 # install Node.js modules
+export NODE_PATH=$HOME/lib/node_modules
 npm --prefix $NODE_PATH  install bower express grunt jade less mocha \
                          chai jsdom typescript typescript-tools yo \
 mkdir -p ~/bin

@@ -1,6 +1,5 @@
 #!/bin/zsh
 
-mkdir -p ~/lib
 mkdir -p ~/workspace
 
 function links {
