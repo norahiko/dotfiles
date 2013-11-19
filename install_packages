@@ -5,7 +5,7 @@ sudo add-apt-repository -y ppa:chris-lea/node.js
 
 sudo apt-get update
 
-sudo apt-get -y install bless build-essential ctags git mercurial nodejs nodejs-dev rlwrap ruby zsh \
+sudo apt-get -y install bless build-essential ctags git mercurial nodejs nodejs-dev rlwrap ruby vim zsh \
                         gimp gnome-shell inkscape tree ibus-mozc nautilus-open-terminal
 
 # install python packages
