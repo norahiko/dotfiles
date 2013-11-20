@@ -514,6 +514,7 @@ let g:pymode_lint_checker = "pyflakes"
 "自動的に上画面にドキュメントが表示されるのを停止する
 set completeopt-=preview
 
+let g:pymode_rope_global_prefix = "<Leader>p"
 
 " Align --------------------------------------------
 map <unique> <Leader>W= <Plug>AM_w=
