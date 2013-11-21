@@ -27,6 +27,9 @@ alias im="vim"
 source /usr/local/bin/virtualenvwrapper.sh
 export WORKEN_HOME=$HOME/.envs
 
+# env var
+export EDITOR=vim
+export PAGER=less
 
 # Z autojump
 _Z_CMD=j
