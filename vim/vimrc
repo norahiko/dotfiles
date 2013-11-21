@@ -140,11 +140,11 @@ nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
 map <Leader>u <Plug>(operator-camelize)
 map <Leader>U <Plug>(operator-decamelize)
 
-nmap <Leader>h <Plug>(quickhl-toggle)
-xmap <Leader>h <Plug>(quickhl-toggle)
-nmap <Leader>H <Plug>(quickhl-reset)
-xmap <Leader>H <Plug>(quickhl-reset)
-nmap <Leader>j <Plug>(quickhl-match)
+nmap <Leader>h <Plug>(quickhl-manual-this)
+xmap <Leader>h <Plug>(quickhl-manual-this)
+nmap <Leader>H <Plug>(quickhl-manual-reset)
+xmap <Leader>H <Plug>(quickhl-manual-reset)
+nmap <Leader>j <Plug>(quickhl-manual-match)
 
 vmap <silent>sa <Plug>(operator-surround-append)
 vmap <silent>sd <Plug>(operator-surround-delete)
@@ -417,6 +417,18 @@ function! s:unite_my_settings()
  imap <silent><buffer> <ESC><ESC> <ESC>:<C-u>q<CR>
 endfunction
 
+" quickhl -------------------------------------------
+let g:quickhl_manual_colors = [
+    \ "gui=bold ctermfg=16  ctermbg=153 guifg=#ffffff guibg=#0a7383",
+    \ "gui=bold ctermfg=16   ctermbg=1   guibg=#a07040 guifg=#ffffff",
+    \ "gui=bold ctermfg=16   ctermbg=2   guibg=#4070a0 guifg=#ffffff",
+    \ "gui=bold ctermfg=16   ctermbg=3   guibg=#40a070 guifg=#ffffff",
+    \ "gui=bold ctermfg=16   ctermbg=5   guibg=#40a070 guifg=#ffffff",
+    \ "gui=bold ctermfg=16   ctermbg=6   guibg=#40a070 guifg=#ffffff",
+    \ "gui=bold ctermfg=16   ctermbg=7   guibg=#40a070 guifg=#ffffff",
+    \ "gui=bold ctermfg=16   ctermbg=8   guibg=#40a070 guifg=#ffffff",
+    \ "gui=bold ctermfg=16   ctermbg=9   guibg=#40a070 guifg=#ffffff",
+    \ ]
 
 " YankRing -------------------------------------------
 let g:yankring_history_dir = "$HOME/.vim"
