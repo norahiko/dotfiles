@@ -376,6 +376,8 @@ function! s:unite_my_settings()
  imap <silent><buffer> <ESC><ESC> <ESC>:<C-u>q<CR>
 endfunction
 
+" outline
+command! Outline Unite -vertical -winwidth=40 outline
 " }}}
 
 " quickhl {{{
