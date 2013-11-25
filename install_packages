@@ -32,6 +32,6 @@ ln -sf ~/lib/node_modules/grunt-cli/bin/grunt      ~/bin/grunt
 ln -sf ~/lib/node_modules/less/bin/lessc           ~/bin/lessc
 ln -sf ~/lib/node_modules/mocha/bin/mocha          ~/bin/mocha
 ln -sf ~/lib/node_modules/typescript/bin/tsc       ~/bin/tsc
-ln -sf ~/lib/node_modules/typescript-tools/bin/tss ~/bin/tsc
+ln -sf ~/lib/node_modules/typescript-tools/bin/tss ~/bin/tss
 ln -sf ~/lib/node_modules/yo/bin/yo                ~/bin/yo
 
