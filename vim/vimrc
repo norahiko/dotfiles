@@ -133,8 +133,10 @@ noremap <Leader>f :NERDTree<CR>
 autocmd QuickFixCmdPost *grep* cwindow
 
 " Git gutter
-nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
-nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
+noremap <silent> <Leader>gg :GitGutterToggle<CR>
+noremap <silent> <Leader>gh :GitGutterLineHighlightsToggle<CR>
+noremap <silent> <Leader>gn :GitGutterNextHunk<CR>
+noremap <silent> <Leader>gp :GitGutterPrevHunk<CR>
 
 "operator
 map <Leader>u <Plug>(operator-camelize)
