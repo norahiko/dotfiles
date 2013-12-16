@@ -29,6 +29,7 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'add20/vim-conque'
 NeoBundle 'Shougo/vimshell'
+NeoBundle 'mhinz/vim-startify'
 "NeoBundle 'errormarker.vim'
 
 " edit
@@ -310,6 +311,19 @@ set nofoldenable
 " =======================================================================
 " プラグインの設定
 " =======================================================================
+" startify {{{
+let g:startify_custom_indices = ['a', 's', 'd', 'f', 'g']
+let g:startify_bookmarks = [
+  \ '~/workspace/dotfiles/vim/vimrc',
+  \ '~/workspace/dotfiles/git/gitconfig',
+  \ '~/lib/node_modules/typescript/bin/lib.d.ts',
+  \ '/usr/lib/nodejs/path.js',
+  \ '/usr/lib/python2.7/os.py',
+  \ '~/workspace/dotfiles/vim/snippets/javascript.snippets',
+  \ '~/lib/go/src/pkg/path/path.go',
+  \ ]
+noremap <Leader>d :Startify<CR>
+" }}}
 
 " lightline.vim {{{
 let g:lightline = {
