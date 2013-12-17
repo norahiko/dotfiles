@@ -550,6 +550,7 @@ nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() 
 
 " golang {{{
 autocmd FileType go call s:go_config()
+let g:go_highlight_chan_whitespace_error = 0
 
 function! s:go_config()
     setlocal noexpandtab
