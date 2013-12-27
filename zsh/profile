@@ -22,6 +22,6 @@ if [ -d "$HOME/bin" ] ; then
 fi
 export JAVA_HOME=$HOME/lib/jdk
 export GOROOT=$HOME/lib/go
-export GOPATH=$HOME/workspace/gopath
+export GOPATH=$HOME/lib/gopath
 export NODE_PATH=$HOME/lib/node_modules
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$JAVA_HOME/bin
