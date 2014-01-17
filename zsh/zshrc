@@ -41,6 +41,9 @@ precmd() {
   _z --add "$(pwd -P)"
 }
 
+# Path
+export PATH=$PATH:$HOME/.cabal/bin
+
 # vim command friendly
 stty -ixon -ixoff
 
