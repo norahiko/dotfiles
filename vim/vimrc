@@ -30,6 +30,7 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'add20/vim-conque'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'mhinz/vim-startify'
+NeoBundle 'tyru/capture.vim'
 "NeoBundle 'errormarker.vim'
 
 " edit
@@ -39,7 +40,6 @@ NeoBundle 'Shougo/neocomplcache.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Align'
 NeoBundle 'tyru/operator-camelize.vim'
-NeoBundle 'YankRing.vim'
 
 " operator
 NeoBundle 'operator-user'
@@ -52,6 +52,9 @@ NeoBundle 'othree/html5.vim'
 NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'tpope/vim-markdown'
+NeoBundle 'dag/vim2hs'
+NeoBundle 'ujihisa/neco-ghc'
+NeoBundle 'eagletmt/ghcmod-vim'
 "NeoBundle 'jdonaldson/vaxe'
 "NeoBundle 'digitaltoad/vim-jade'
 "NeoBundle 'vim-scripts/Dart.git'
@@ -393,7 +396,7 @@ function! s:unite_my_settings()
 endfunction
 
 " outline
-command! Outline Unite -vertical -winwidth=40 outline
+command! Outline Unite -vertical -winwidth=40 -no-quit outline
 " }}}
 
 " quickhl {{{
