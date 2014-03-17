@@ -6,9 +6,7 @@
 " runtimepath {{{
 if has('vim_starting')
     set runtimepath+=$GOROOT/misc/vim
-    set runtimepath+=$HOME/node_modules/typescript-tools
     exe "set runtimepath+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
-
     filetype off
     set runtimepath+=~/.vim/neobundle.vim
     call neobundle#rc(expand('~/.vim/bundle/'))
@@ -24,13 +22,12 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'taglist.vim'
 NeoBundle 'mattn/gist-vim'
 NeoBundle 'mattn/webapi-vim'
+NeoBundle 'vim-jp/vimdoc-ja'
 
 " run
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'add20/vim-conque'
 NeoBundle 'Shougo/vimshell'
-NeoBundle 'mhinz/vim-startify'
 NeoBundle 'tyru/capture.vim'
 "NeoBundle 'errormarker.vim'
 
@@ -41,6 +38,7 @@ NeoBundle 'Shougo/neocomplcache.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Align'
 NeoBundle 'tyru/operator-camelize.vim'
+NeoBundle 'scrooloose/syntastic'
 
 " operator
 NeoBundle 'operator-user'
@@ -55,8 +53,14 @@ NeoBundle 'tpope/vim-markdown'
 NeoBundle 'dag/vim2hs'
 NeoBundle 'ujihisa/neco-ghc'
 NeoBundle 'eagletmt/ghcmod-vim'
-NeoBundle 'JavaScript-syntax'
-"NeoBundle 'jdonaldson/vaxe'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'wavded/vim-stylus'
+NeoBundle 'marijnh/tern_for_vim', {
+    \ 'build' : {'unix': 'npm install'},
+    \ 'autoload' : {
+    \   'functions': ['tern#Complete', 'tern#Enable'],
+    \   'filetypes' : 'javascript'
+    \ }}
 "NeoBundle 'digitaltoad/vim-jade'
 "NeoBundle 'vim-scripts/Dart.git'
 "NeoBundle 'groenewege/vim-less'
@@ -126,21 +130,38 @@ noremap # #zz
 noremap g* g*zz
 noremap g# g#zz
 
-" オムニ補完
-imap <C-N> <C-X><C-O>
+" vimdiffに関する設定
+if &diff
+  map <leader>1 :diffget LOCAL<CR>
+  map <leader>2 :diffget BASE<CR>
+  map <leader>3 :diffget REMOTE<CR>
+endif
 
+" コマンドラインモード
+"
+cnoremap <C-a> <Home>
+" 一文字戻る
+cnoremap <C-b> <Left>
+" カーソルの下の文字を削除
+cnoremap <C-d> <Del>
+" 行末へ移動
+cnoremap <C-e> <End>
+" 一文字進む
+cnoremap <C-f> <Right>
+" コマンドライン履歴を一つ進む
+cnoremap <C-n> <Down>
+" コマンドライン履歴を一つ戻る
+cnoremap <C-p> <Up>
+" 前の単語へ移動
+cnoremap <M-b> <S-Left>
+" 次の単語へ移動
+cnoremap <M-f> <S-Right>
 " show-marks
 noremap <Leader>m :DoShowMark<CR>
 
-noremap <Leader>f :NERDTree<CR>
-
 autocmd QuickFixCmdPost *grep* cwindow
 
-" Git gutter
-noremap <silent> <Leader>gg :GitGutterToggle<CR>
-noremap <silent> <Leader>gh :GitGutterLineHighlightsToggle<CR>
-noremap <silent> <Leader>gn :GitGutterNextHunk<CR>
-noremap <silent> <Leader>gp :GitGutterPrevHunk<CR>
+imap <c-t> <Nop>
 
 "operator
 map <Leader>u <Plug>(operator-camelize)
@@ -152,12 +173,10 @@ nmap <Leader>H <Plug>(quickhl-manual-reset)
 xmap <Leader>H <Plug>(quickhl-manual-reset)
 nmap <Leader>j <Plug>(quickhl-manual-match)
 
-"vmap <silent>sa <Plug>(operator-surround-append)
-"vmap <silent>sd <Plug>(operator-surround-delete)
-"vmap <silent>sr <Plug>(operator-surround-replace)
-
 map <Leader>e <Plug>(operator-html-escape)
 map <Leader>E <Plug>(operator-html-unescape)
+
+
 " }}}
 
 " 編集に関する設定 {{{
@@ -201,34 +220,8 @@ set autochdir
 hi link diffRemoved Comment
 hi link diffAdded Comment
 
-" vimdiffに関する設定
-"
-if &diff
-  map <leader>1 :diffget LOCAL<CR>
-  map <leader>2 :diffget BASE<CR>
-  map <leader>3 :diffget REMOTE<CR>
-endif
-
-
-" コマンドラインモード
-"
-cnoremap <C-a> <Home>
-" 一文字戻る
-cnoremap <C-b> <Left>
-" カーソルの下の文字を削除
-cnoremap <C-d> <Del>
-" 行末へ移動
-cnoremap <C-e> <End>
-" 一文字進む
-cnoremap <C-f> <Right>
-" コマンドライン履歴を一つ進む
-cnoremap <C-n> <Down>
-" コマンドライン履歴を一つ戻る
-cnoremap <C-p> <Up>
-" 前の単語へ移動
-cnoremap <M-b> <S-Left>
-" 次の単語へ移動
-cnoremap <M-f> <S-Right>
+" ドキュメントの日本語化ファル
+helptags ~/workspace/dotfiles/vim/bundle/vimdoc-ja/doc
 
 " インデント
 "
@@ -300,7 +293,7 @@ if filereadable($VIM . '/vimrc') && filereadable($VIM . '/ViMrC')
 set tags=./tags,tags
 endif
 "クリップボードに関する設定o:
-set clipboard=unnamed,autoselect
+set clipboard=unnamedplus
 
 " 前回のカーソル位置を復元する
 autocmd BufReadPost *
@@ -317,19 +310,6 @@ set nofoldenable
 " =======================================================================
 " プラグインの設定
 " =======================================================================
-" startify {{{
-let g:startify_custom_indices = ['a', 's', 'd', 'f', 'g']
-let g:startify_bookmarks = [
-  \ '~/workspace/dotfiles/vim/vimrc',
-  \ '~/workspace/dotfiles/git/gitconfig',
-  \ '~/lib/node_modules/typescript/bin/lib.d.ts',
-  \ '/usr/lib/nodejs/path.js',
-  \ '/usr/lib/python2.7/os.py',
-  \ '~/workspace/dotfiles/vim/snippets/javascript.snippets',
-  \ '~/lib/go/src/pkg/path/path.go',
-  \ ]
-noremap <Leader>d :Startify<CR>
-" }}}
 
 " lightline.vim {{{
 let g:lightline = {
@@ -372,32 +352,29 @@ endfunction
 
 " }}}
 
+
+" Git gutter {{{
+noremap <silent> <Leader>gg :GitGutterToggle<CR>
+noremap <silent> <Leader>gh :GitGutterLineHighlightsToggle<CR>
+noremap <silent> <Leader>gn :GitGutterNextHunk<CR>
+noremap <silent> <Leader>gp :GitGutterPrevHunk<CR>
+" }}}
+
 " Unite.vim {{{
 
-" インサート／ノーマルどちらからでも呼び出せるようにキーマップ
-nnoremap <silent> <C-f> :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
-inoremap <silent> <C-f> <ESC>:<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
-nnoremap <silent> <C-b> :<C-u>Unite buffer file_mru<CR>
-inoremap <silent> <C-b> <ESC>:<C-u>Unite buffer file_mru<CR>
-"nnoremap <silent> <C-o> :<C-u>Unite -winwidth=40 -vertical outline<CR>
-"inoremap <silent> <C-o> <ESC>:<C-u>Unite -winwidth=40 -vertical outline<CR>
-"nnoremap <silent> <C-g> :<C-u>Unite -buffer-name=register register<CR>
-"inoremap <silent> <C-g> <ESC>:<C-u>Unite -buffer-name=register register<CR>
+"nnoremap <silent> <C-f> :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
+"inoremap <silent> <C-f> <ESC>:<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
+nnoremap <silent> <C-b> :<C-u>Unite file_mru<CR>
+inoremap <silent> <C-b> <ESC>:<C-u>Unite file_mru<CR>
 
-" ブックマーク一覧の表示
-nnoremap <silent> ,bb :Unite bookmark<CR>
-nnoremap <silent> ,ba :UniteBookmarkAdd<CR>
-
-" unite.vim上でのキーマッピング
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
- " ESCキーを2回押すと終了する
  nmap <silent><buffer> <ESC><ESC> :<C-u>q<CR>
  imap <silent><buffer> <ESC><ESC> <ESC>:<C-u>q<CR>
 endfunction
 
-" outline
-command! Outline Unite -vertical -winwidth=40 -no-quit outline
+" unite-outline
+map <Leader>o Unite -vertical -winwidth=40 -no-quit outline
 " }}}
 
 " quickhl {{{
@@ -437,64 +414,49 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default' : '',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
+    \ 'javascript' : $HOME. '/.javascript_completions',
+    \ 'typescript' : $HOME. '/.typescript_completions',
+    \ 'python' : $HOME. '/.python_completions',
+    \ 'go' : $HOME. '/.go_completions',
     \ }
 
-" Define keyword, for minor languages
-if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
-endif
+let g:neocomplcache_keyword_patterns = {}
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+let g:neocomplcache_omni_patterns = {}
+let g:neocomplcache_omni_patterns.go = '\h\w*\.\?'
 
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neocomplcache_snippets_expand)
 smap <C-k>     <Plug>(neocomplcache_snippets_expand)
 inoremap <expr><C-g>     neocomplcache#undo_completion()
 inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-" SuperTab like snippets behavior.
-"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
 inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplcache#close_popup()
 inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
 " Enable omni completion. Not required if they are already set elsewhere in .vimrc
+autocmd Filetype javascript call tern#Enable()
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-"autocmd FileType javascript setlocal omnifunc=jscomplete#CompleteJS
+"autocmd FileType javascript setlocal omnifunc=tern#Complete
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
-"autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
-"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+" }}}
 
-let g:jscomplete_use = ["dom", "es6th"]
-let g:node_usejscomplete = 1
-
-" Enable heavy omni completion, which require computational power and may stall the vim.
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
-let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+" NERDTree {{{
+autocmd VimEnter * NERDTree | wincmd p
+noremap <Leader>f :NERDTreeToggle<CR>
 
 " }}}
 
 " emmet {{{
-let g:user_emmet_leader_key = '<c-e>'
-
+let g:user_emmet_leader_key = '<c-0>'
+autocmd FileType html map <buffer> <c-e> :call emmet#expandAbbr(3,"")<CR>
+" }}}
 
 " For snippet_complete marker.
 if has('conceal')
@@ -545,11 +507,22 @@ let g:quickrun_config = {
 \   "command": "coffee",
 \   "exec": ["%c %s"],
 \ },
+\ "typescript": {
+\   "command": "tsc",
+\   "exec": ["%c %s -t ES5"],
+\ },
 \
 \ }
 
-" quickrun.vim が実行していない場合には <C-c> を呼び出す
-nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+" quickrun.vim が実行している時はquickrunを停止する
+command Stop call quickrun#sweep_sessions()
+" }}}
+
+autocmd FileType typescript setlocal nocindent
+
+" Syntastic {{{
+let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [],'passive_filetypes': ['typescript'] }
+nnoremap <Leader>S :SyntasticCheck<CR>
 " }}}
 
 " golang {{{
