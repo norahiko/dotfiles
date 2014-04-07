@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-mkdir -p ~/workspace
+mkdir -p ~/work
 
 function links {
     rm -rf ~/$1

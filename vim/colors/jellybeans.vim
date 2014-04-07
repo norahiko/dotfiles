@@ -335,6 +335,8 @@ call s:X("PreProc","8fbfdc","","","LightBlue","")
 hi link Operator Identifier
 
 call s:X("Type","ffb964","","","Yellow","")
+call s:X("Values","8fbfdc","","","DarkBlue","")
+call s:X("javaScriptFunction","77e970","","","DarkBlue","")
 call s:X("NonText","808080","151515","","","")
 
 call s:X("SpecialKey","808080","343434","","","")

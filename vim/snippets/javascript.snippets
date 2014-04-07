@@ -1,7 +1,7 @@
 # Console.log
 snippet bench
 	var start = Date.now();
-
+    ${1}
 	console.log(Date.now() - start, "[ms]");
 snippet assertions
 	var chai       = global.chai || require("chai");
@@ -25,9 +25,6 @@ snippet inter
 	setInterval(function() {
 		${1}
 	}, 100);
-
-
-
 snippet bc
 	// ----------------------------------------
 	// ${1}
@@ -37,14 +34,16 @@ snippet j
 	console.log(JSON.stringify(${1}, null, 2));
 snippet u
 	undefined${1}
+snippet p
+	prototype.${1}
 snippet a
 	assert.${1}
 snippet des
-	describe("${1}", function() {
+	describe('${1}', function() {
 		${2}
 	});
 snippet it
-	it("${1}", function() {
+	it('${1}', function() {
 		${2}
 	});
 snippet ok
@@ -61,7 +60,8 @@ snippet ne
 		${1},
 		${2}
 	);
-
+snippet th
+    throw new Error('${1}');
 # Main
 snippet ifmain
 	if(!module.parent) {

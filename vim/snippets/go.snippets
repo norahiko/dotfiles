@@ -8,26 +8,33 @@ snippet main
 	func main() {
 
 	}
+snippet fa
+	log.Fatal(err)
+snippet ef
+	if err != nil {
+		log.Fatal(err)
+	}
+snippet er
+	if err != nil {
+		return err
+	}
 snippet p
 	fmt.Println(${1})
-
 snippet f
 	fmt.Printf("${1}", ${2})
-
+snippet fp
+	fmt.Fprintf(w, ${1})
 snippet fori
 	for i := 0; i < ${1}; i++ {
 		${2}
 	}
-
 snippet forr
 	for ${1} := range ${2} {
 		${3}
 	}
-
 snippet handler
 	func handler(w http.ResponseWriter, r *http.Request) {
 		${1}
 	}
-
-
-
+snippet i
+	interface{}${1}

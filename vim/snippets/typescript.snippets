@@ -5,17 +5,17 @@ snippet a
 	assert.${1}
 
 snippet desc
-	describe("${1: title}", function() {
+	describe('${1: title}', function() {
 		${2}
 	});
 
 snippet it
-	it("${1: title}", function() {
+	it('${1: title}', function() {
 		${2}
 	});
 
 snippet des
-	describe("${1}", function() {
+	describe('${1}', function() {
 		${2}
 	});
 
@@ -51,3 +51,7 @@ snippet con
 
 	}
 
+snippet u
+	undefined${1}
+snippet p
+	prototype.${1}
