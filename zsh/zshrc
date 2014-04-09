@@ -21,6 +21,7 @@ alias ln="ln -sf"
 alias gs="git status -s"
 alias gst="git status"
 alias gr="git gr"
+alias gl="git log"
 alias im="vim"
 
 . $HOME/.zsh/z.sh
