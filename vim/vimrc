@@ -27,11 +27,12 @@ NeoBundle 'mattn/webapi-vim'
 " run
 NeoBundle 'Shougo/vimproc', {'build': {'unix': 'make -f make_unix.mak'}}
 " quickrun
-NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'norahiko/vim-quickrun' , {'rev': 'fix_typescript'}
 NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
 " command output to buffer
 NeoBundle 'tyru/capture.vim'
+NeoBundle 'thinca/vim-prettyprint'
 
 " comment utility
 NeoBundle 'scrooloose/nerdcommenter'
@@ -45,7 +46,6 @@ NeoBundle 'Shougo/neosnippet-snippets'
 " show source outline
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Align'
-
 " operator
 NeoBundle 'operator-user'
 NeoBundle 'tyru/operator-camelize.vim'
@@ -64,7 +64,7 @@ NeoBundleLazy 'wavded/vim-stylus'           , {'autoload': {'filetypes': 'stylus
 
 "JavaScript
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload': {'filetypes': 'javascript'}}
-NeoBundleLazy 'marijnh/tern_for_vim', {
+NeoBundleLazy 'norahiko/tern_for_vim', {
             \ 'build' : {'unix': 'npm install'},
             \ 'autoload' : {
             \   'functions': ['tern#Complete', 'tern#Enable'],
@@ -297,7 +297,8 @@ set foldmethod=indent
 set foldlevel=1
 set nofoldenable
 " }}}
-
+let g:tern_show_argument_hints = 'on_hold'
+set updatetime=600
 " オムニ補完関数
 autocmd Filetype javascript call tern#Enable()
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -310,6 +311,8 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 " =======================================================================
 " プラグインの設定
 " =======================================================================
+
+command! -nargs=1 PPP Capture PrettyPrint <args>
 
 " fugitive {{{
 command! Gs Gstatus
@@ -381,7 +384,7 @@ function! s:unite_my_settings()
 endfunction
 " }}}
 
-" unite-outline
+" unite-outline {{{
 map <Leader>o :Unite -vertical -winwidth=40 -no-quit outline<CR>
 " }}}
 
@@ -484,6 +487,9 @@ let g:quickrun_config = {
             \   'runner' : 'vimproc',
             \   'runner/vimproc/updatetime' : 100,
             \ },
+            \ 'javascript': {
+            \   'type': 'javascript/nodejs'
+            \ },
             \ 'jade': {
             \   'command': 'jade',
             \   'exec': 'jade %s -P'
@@ -494,17 +500,23 @@ let g:quickrun_config = {
             \   'output_filetype': 'javascript',
             \   'tempfile'  : '%{tempname()}.js',
             \ },
+            \ 'go': {
+            \   'exec': '%c run %s:p %a',
+            \   'hook/cd/directory': '',
+            \ },
             \ 'runcoffee': {
             \   'command': 'coffee',
             \   'exec': ['%c %s'],
             \ },
             \ 'typescript': {
-            \   'command': 'tsc',
-            \   'exec': ['%c %s -t ES5'],
+            \   'cmdopt': '--noImplicitAny',
+            \ },
+            \ 'stylus': {
+            \   'cmdopt': '--print'
             \ },
             \}
 " quickrunを停止する
-command Stop call quickrun#sweep_sessions()
+command! Stop call quickrun#sweep_sessions()
 " }}}
 
 " vim-watchdogs {{{
@@ -520,6 +532,10 @@ noremap <Leader>w :WatchdogsRun<CR>
 "autocmd FileType typescript setlocal nocindent
 autocmd Filetype typescript noremap <buffer><silent> <C-]> :TSSdef<CR>
 " }}}
+
+" Tern js {{{
+autocmd Filetype javascript noremap <buffer><silent> <C-]> :TernDef<CR>
+"}}}
 
 " golang {{{
 autocmd FileType go call s:go_config()
