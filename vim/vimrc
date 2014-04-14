@@ -6,7 +6,7 @@
 " runtimepath {{{
 if has('vim_starting')
     set nocompatible
-    exe "set runtimepath+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
+    exe 'set runtimepath+='.globpath($GOPATH, 'src/github.com/nsf/gocode/vim')
     filetype off
     set runtimepath+=~/.vim/neobundle.vim
     call neobundle#rc(expand('~/.vim/bundle/'))
@@ -45,7 +45,7 @@ NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neosnippet-snippets'
 " show source outline
 NeoBundle 'Shougo/unite-outline'
-NeoBundle 'Align'
+NeoBundle 'junegunn/vim-easy-align'
 " operator
 NeoBundle 'operator-user'
 NeoBundle 'tyru/operator-camelize.vim'
@@ -61,29 +61,29 @@ NeoBundleLazy 'dag/vim2hs'                  , {'autoload': {'filetypes': 'haskel
 NeoBundleLazy 'ujihisa/neco-ghc'            , {'autoload': {'filetypes': 'haskell'}}
 NeoBundleLazy 'eagletmt/ghcmod-vim'         , {'autoload': {'filetypes': 'haskell'}}
 NeoBundleLazy 'wavded/vim-stylus'           , {'autoload': {'filetypes': 'stylus'}}
+NeoBundleLazy 'jdonaldson/vaxe'             , {'autoload': {'filetypes': 'haxe'}}
 
 "JavaScript
 NeoBundleLazy 'pangloss/vim-javascript', {'autoload': {'filetypes': 'javascript'}}
 NeoBundleLazy 'norahiko/tern_for_vim', {
-            \ 'build' : {'unix': 'npm install'},
+            \ 'build' : {
+            \   'unix': 'npm install',
+            \ },
             \ 'autoload' : {
             \   'functions': ['tern#Complete', 'tern#Enable'],
             \   'filetypes' : 'javascript'
             \ }}
 
 " Jade
-NeoBundleLazy 'digitaltoad/vim-jade', {
-            \ 'autoload': {'filetypes': 'jade'}
-            \}
+NeoBundleLazy 'digitaltoad/vim-jade', {'autoload': {'filetypes': 'jade'}}
 " Golang
-NeoBundleLazy 'norahiko/vim-golang', {
-            \ 'autoload': {'filetypes': 'go'}
-            \ }
+NeoBundleLazy 'norahiko/vim-golang', {'autoload': {'filetypes': 'go'}}
 
 " style
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'jacquesbh/vim-showmarks'
 NeoBundle 'quickhl.vim'
+NeoBundle 'jceb/vim-hier'
 " }}}
 
 " filetype detect {{{
@@ -91,6 +91,7 @@ autocmd BufNewFile,BufReadPost *.go set filetype=go
 autocmd BufNewFile,BufReadPost *.jade set filetype=jade
 autocmd BufNewFile,BufReadPost *.ts set filetype=typescript
 autocmd BufNewFile,BufReadPost *.styl set filetype=stylus
+autocmd BufNewFile,BufReadPost *.hx set filetype=haxe
 " }}}
 
 " =======================================================================
@@ -121,6 +122,10 @@ noremap ; :
 
 " ハイライトを非表示
 noremap <Leader>n :nohl<CR>
+
+" 常に拡張正規表現を使う
+nnoremap / /\v
+cnoremap %s/ %s/\v
 
 " ctags
 noremap <C-]> g<C-]>
@@ -261,11 +266,14 @@ syntax on
 " (行がそれより長くなると、この幅を超えないように空白の後で改行される)を無効にする
 set textwidth=0
 
+" ウィンドウを自動でリサイズしない
+set noequalalways
+
 " 全角スペースの表示
 highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=red
 highlight CursorIM guifg=NONE guibg=Purple
 match ZenkakuSpace /　/
-set conceallevel=2 concealcursor=i
+set conceallevel=0 concealcursor=i
 
 " 空白文字を表示する
 set list
@@ -476,14 +484,13 @@ let g:pymode_rope_global_prefix = '<Leader>p'
 " }}}
 
 " Align {{{
-map <unique> <Leader>W= <Plug>AM_w=
-map <unique> <Leader>M= <Plug>AM_m=
+vmap <Enter> <Plug>(EasyAlign)
 " }}}
 
 " Quickrun {{{
 let g:quickrun_config = {
             \ '_' : {
-            \   'outputter/buffer/split' : ':botright 8sp',
+            \   'outputter/buffer/split' : ':botright 6sp',
             \   'runner' : 'vimproc',
             \   'runner/vimproc/updatetime' : 100,
             \ },
@@ -514,7 +521,21 @@ let g:quickrun_config = {
             \ 'stylus': {
             \   'cmdopt': '--print'
             \ },
+            \ 'haxe': {
+            \   'exec': '%c -x %s:t',
+            \ },
+            \ "watchdogs_checker/_" : {
+            \   'outputter/quickfix/open_cmd' : 'cwindow',
+            \ },
+            \ 'watchdogs_checker/haxe': {
+            \   'exec': 'haxe %s:t',
+            \   'errorformat': "%f:%l: characters %n-%c : %m,%f:%l: lines %m",
+            \ },
+            \ 'haxe/watchdogs_checker': {
+            \   'type': 'watchdogs_checker/haxe',
+            \ },
             \}
+
 " quickrunを停止する
 command! Stop call quickrun#sweep_sessions()
 " }}}
@@ -527,6 +548,12 @@ let g:watchdogs_check_BufWritePost_enables = {
             \}
 noremap <Leader>w :WatchdogsRun<CR>
 " }}}
+
+" vim-hier {{{
+highlight hier_error ctermbg=237
+let g:hier_highlight_group_qf = 'hier_error'
+" }}}
+
 
 " TypeScript {{{
 "autocmd FileType typescript setlocal nocindent
