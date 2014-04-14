@@ -1,7 +1,5 @@
 #!/bin/zsh
 
-mkdir -p ~/work
-
 function links {
     rm -rf ~/$1
     ln -s `pwd`/$2 ~/$1
@@ -16,10 +14,10 @@ links .zshrc         zsh/zshrc
 links .zsh           zsh
 links .gitconfig     git/gitconfig
 links .gitignore     git/gitignore
+links .npmrc         nodejs/npmrc
+links .jshintrc      nodejs/jshintrc
+links .tern-project  nodejs/tern-project
 
 links bin/startup.py python/startup.py
-links bin/watchnow   tool/watchnow
-links bin/remotehead tool/remotehead
-
 links .Xmodmap       ubuntu/Xmodmap
 
