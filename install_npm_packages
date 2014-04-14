@@ -1,0 +1,6 @@
+#!/bin/bash
+npm config set prefix $HOME
+npm config set tmp /tmp
+
+npm -g  install bower gulp jade less mocha chai \
+                jsdom typescript typescript-tools yo \
