@@ -1,0 +1,39 @@
+snippet main
+    static function main() {
+        trace('hello');
+    }
+snippet p
+    trace(${1});
+snippet c
+    class ${1} {
+    }
+snippet fori
+    for(i in 0...${1:100}) {
+    }
+snippet f
+    function ${1}
+snippet pf
+    public function ${1}() {
+    }
+snippet sf
+    static function ${1}() {
+    }
+snippet psf
+    public static function ${1}() {
+    }
+snippet of
+    override function ${1}() {
+    }
+snippet pv
+    public var ${1}
+snippet sv
+    static var ${1}
+snippet spv
+    public static var ${1}
+snippet new
+    public function new(${1}) {
+    }
+snippet #if
+	#if js, php, cpp, flash
+	${1}
+	#end{2}
