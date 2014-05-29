@@ -27,7 +27,7 @@ NeoBundle 'mattn/webapi-vim'
 " run
 NeoBundle 'Shougo/vimproc', {'build': {'unix': 'make -f make_unix.mak'}}
 " quickrun
-NeoBundle 'norahiko/vim-quickrun' , {'rev': 'fix_typescript'}
+NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
 " command output to buffer
@@ -190,15 +190,15 @@ cnoremap <M-f> <S-Right>
 
 
 "operator
-noremap <Leader>u <Plug>(operator-camelize)
-noremap <Leader>U <Plug>(operator-decamelize)
+nmap <Leader>u <Plug>(operator-camelize)
+nmap <Leader>U <Plug>(operator-decamelize)
 
-nnoremap <Leader>h <Plug>(quickhl-manual-this)
-xnoremap <Leader>h <Plug>(quickhl-manual-this)
+nmap <Leader>h <Plug>(quickhl-manual-this)
+xmap <Leader>h <Plug>(quickhl-manual-this)
 
-noremap <Leader>e <Plug>(operator-html-escape)
-noremap <Leader>E <Plug>(operator-html-unescape)
-nnoremap <silent> <Leader>j :ErrorAtCursor<CR>
+nmap <Leader>e <Plug>(operator-html-escape)
+nmap <Leader>E <Plug>(operator-html-unescape)
+nmap <silent> <Leader>j :ErrorAtCursor<CR>
 " }}}
 
 " 編集に関する設定 {{{
@@ -552,13 +552,17 @@ let g:quickrun_config = {
             \ "watchdogs_checker/_" : {
             \   'outputter/quickfix/open_cmd' : 'cwindow',
             \ },
-            \ 'watchdogs_checker/haxe': {
+            \ 'watchdogs_checker/haxe-project': {
             \   'exec': 'haxe build.hxml --no-output',
             \   'errorformat': "%f:%l: characters %n-%c : %m,%f:%l: lines %m,%m",
             \   'hook/cd/directory': '%{fnamemodify(b:vaxe_hxml, ":h")}',
             \ },
+            \ 'watchdogs_checker/haxe': {
+            \   'exec': 'haxe %s:t --no-output ',
+            \   'errorformat': "%f:%l: characters %n-%c : %m,%f:%l: lines %m,%m",
+            \ },
             \ 'haxe/watchdogs_checker': {
-            \   'type': 'watchdogs_checker/haxe',
+            \   'type': '',
             \ },
             \}
 
@@ -607,13 +611,14 @@ function! g:find_xhml()
     while path != parent
         if filereadable(path . sep . g:hxml_name)
             let b:vaxe_hxml = path . sep . g:hxml_name
-            return path
+            let g:quickrun_config['haxe/watchdogs_checker']['type'] = 'watchdogs_checker/haxe-project'
+            return
         endif
         let path = parent
         let parent = fnamemodify(parent, ':h')
     endwhile
     let b:vaxe_hxml = cwd . sep . g:hxml_name
-    return cwd
+    let g:quickrun_config['haxe/watchdogs_checker']['type'] = 'watchdogs_checker/haxe'
 endf
 
 " }}}
