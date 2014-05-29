@@ -3,10 +3,10 @@
 snippet bench
 	var start = Date.now();
 	${1}
-	console.log(Date.now() - start, "[ms]");
+	console.log(Date.now() - start, '[ms]');
 
 snippet assertions
-	var chai       = global.chai || require("chai");
+	var chai       = global.chai || require('chai');
 	var equal      = chai.assert.deepEqual;
 	var notEqual   = chai.assert.notDeepEqual;
 	var instanceOf = chai.assert.instanceOf;
@@ -14,7 +14,7 @@ snippet assertions
 
 snippet wraps
 	(function(global) {
-	"use strict";
+	'use strict';
 	${1}
 	})(this.self || global);
 
