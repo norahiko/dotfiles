@@ -1,8 +1,10 @@
 # Console.log
+
 snippet bench
 	var start = Date.now();
-    ${1}
+	${1}
 	console.log(Date.now() - start, "[ms]");
+
 snippet assertions
 	var chai       = global.chai || require("chai");
 	var equal      = chai.assert.deepEqual;
@@ -46,22 +48,22 @@ snippet it
 	it('${1}', function() {
 		${2}
 	});
+snippet sui
+	suite('${1}', function() {
+	});
+snippet te
+	test('${1}', function() {
+	});
 snippet ok
 	assert.ok(${1})
 snippet r
 	refute(${1});
 snippet eq
-	equal(
-		${1},
-		${2}
-	);
+	equal(${1});
 snippet ne
-	notEqual(
-		${1},
-		${2}
-	);
+	notEqual(${1});
 snippet th
-    throw new Error('${1}');
+	throw new Error('${1}');
 # Main
 snippet ifmain
 	if(!module.parent) {
@@ -75,13 +77,16 @@ snippet proto
 	};
 # Function
 snippet fun
-	function ${1:function_name} (${2:argument}) {
-		${3:// body...}
+	function (${1}) {
+	};
+snippet func
+	function ${1} (${2}) {
 	}
-# Anonymous Function
 snippet f
-    function ${1}
-# if
+	function${1}
+snippet cb
+	function (${1}) {
+	});
 snippet if
 	if (${1:true}) {${2}};
 # if ... else
