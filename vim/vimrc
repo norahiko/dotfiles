@@ -169,6 +169,8 @@ noremap * *zz
 noremap # #zz
 noremap g* g*zz
 noremap g# g#zz
+noremap n nzz
+noremap N Nzz
 
 " vimdiffに関する設定
 if &diff
