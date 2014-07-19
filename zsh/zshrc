@@ -22,7 +22,9 @@ alias gs="git status -s"
 alias gst="git status"
 alias gr="git gr"
 alias gl="git log"
+alias gp="git push origin master"
 alias im="vim"
+alias mo="mocha -u tdd"
 
 . $HOME/.zsh/z.sh
 
@@ -33,6 +35,8 @@ export WORKEN_HOME=$HOME/.envs
 # env var
 export EDITOR=vim
 export PAGER=less
+export WORK=$HOME/work
+export OSS=$WORK/oss
 
 # Z autojump
 _Z_CMD=j
@@ -43,6 +47,7 @@ precmd() {
 
 # Path
 export PATH=$PATH:$HOME/.cabal/bin
+export CPLUS_INCLUDE_PATH=/home/norahiko/.node-gyp/0.10.26/src:$CPLUS_INCLUDE_PATH
 
 # vim command friendly
 stty -ixon -ixoff

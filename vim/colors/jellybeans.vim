@@ -395,6 +395,7 @@ call s:X("rubyPredefinedIdentifier","de5577","","","Red","")
 " JavaScript
 hi link javaScriptValue Constant
 hi link javaScriptRegexpString rubyRegexp
+hi link jsConstructor javascriptFunction
 
 " Tag list
 hi link TagListFileName Directory

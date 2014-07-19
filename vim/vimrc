@@ -55,7 +55,6 @@ NeoBundle 'tyru/operator-camelize.vim'
 NeoBundleLazy 'tyru/operator-html-escape.vim', {'autoload': {'filetypes': 'html'}}
 
 " lang
-NeoBundleLazy 'klen/python-mode'            , {'autoload': {'filetypes': 'python'}}
 NeoBundleLazy 'othree/html5.vim'            , {'autoload': {'filetypes': 'html'}}
 NeoBundleLazy 'leafgarland/typescript-vim'  , {'autoload': {'filetypes': 'typescript'}}
 NeoBundleLazy 'clausreinke/typescript-tools', {'autoload': {'filetypes': 'typescript'}}
@@ -65,6 +64,7 @@ NeoBundleLazy 'ujihisa/neco-ghc'            , {'autoload': {'filetypes': 'haskel
 NeoBundleLazy 'eagletmt/ghcmod-vim'         , {'autoload': {'filetypes': 'haskell'}}
 NeoBundleLazy 'wavded/vim-stylus'           , {'autoload': {'filetypes': 'stylus'}}
 NeoBundleLazy 'jdonaldson/vaxe'             , {'autoload': {'filetypes': ['haxe', 'hxml']}}
+NeoBundleLazy 'octol/vim-cpp-enhanced-highlight', {'autoload': {'filetypes': ['cpp']}}
 
 "JavaScript
 NeoBundleLazy 'norahiko/vim-javascript', {'autoload': {'filetypes': 'javascript'}}
@@ -139,6 +139,11 @@ noremap <Leader>t :%s/\s\+$//<CR>
 " よく打ち間違えるため
 noremap K k
 noremap ; :
+vnoremap U <Nop>
+vnoremap u <Nop>
+nnoremap H <Nop>
+nnoremap L <Nop>
+
 
 " ハイライトを非表示
 noremap <Leader>n :nohl<CR>
@@ -161,8 +166,8 @@ nnoremap <Leader>- 5<C-w>-
 nnoremap <Leader>^ 5<C-w>+
 
 "Jumplistのキーを入れ替える
-noremap <c-o> <c-i>
-noremap <c-i> <c-o>
+noremap <c-o> <c-i>zz
+noremap <c-i> <c-o>zz
 
 " 検索箇所を真ん中に
 noremap * *zz
@@ -291,7 +296,7 @@ set textwidth=0
 set noequalalways
 
 " 全角スペースの表示
-highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=red
+highlight ZenkakuSpace ctermbg=red guibg=red
 highlight CursorIM guifg=NONE guibg=Purple
 match ZenkakuSpace /　/
 set conceallevel=0 concealcursor=i
@@ -408,10 +413,15 @@ let g:quickrun_config = {
             \ 'haxe/watchdogs_checker': {
             \   'type': '',
             \ },
+            \ "watchdogs_checker/g++" : {
+            \   "command"   : "g++",
+            \   "exec"      : "%c %o -std=gnu++0x -fsyntax-only %s:p -I ~/.node-gyp/0.10.26/src",
+            \ },
             \}
 
+            "\   "exec"    : "%c %s:p -- %o",
 " quickrunを停止する
-command! Stop call quickrun#sweep_sessions()
+command! K call quickrun#sweep_sessions()
 " }}}
 
 " vim-watchdogs {{{
@@ -489,7 +499,7 @@ noremap <silent> <Leader>gp :GitGutterPrevHunk<CR>
 
 " Unite.vim {{{
 let g:unite_split_rule = 'rightbelow'
-nnoremap <silent> <C-f> :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
+noremap <silent> <C-f> :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 inoremap <silent> <C-f> <ESC>:<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> <C-b> :<C-u>Unite file_mru<CR>
 inoremap <silent> <C-b> <ESC>:<C-u>Unite file_mru<CR>
@@ -546,6 +556,8 @@ inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
+
+"call neocomplete#custom#source('omni', 'disabled_filetypes', {'cpp' : 1})
 " }}}
 
 " neosnippet {{{
@@ -576,12 +588,7 @@ let g:NERDTreeWinSize=40
 let g:user_emmet_leader_key = '<c-0>'
 " }}}
 
-" Python Mode {{{
-let g:pymode_lint_checker = 'pyflakes'
-"自動的に上画面にドキュメントが表示されるのを停止する
 set completeopt-=preview
-let g:pymode_rope_global_prefix = '<Leader>p'
-" }}}
 
 " Align {{{
 vmap <Enter> <Plug>(EasyAlign)

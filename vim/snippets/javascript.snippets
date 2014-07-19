@@ -3,11 +3,11 @@
 snippet bench
 	var start = Date.now();
 	${1}
-	console.log(Date.now() - start, '[ms]');
+	console.log(Date.now() - start, "[ms]");
 
 snippet wraps
 	(function(global) {
-	'use strict';
+	"use strict";
 	${1}
 	})(this.self || global);
 
@@ -36,16 +36,20 @@ options word
 snippet a
 	assert.${1}
 snippet des
-	describe('${1}', function() {
+options head
+	describe("${1}", function() {
 	});
 snippet it
-	it('${1}', function() {
+options head
+	it("${1}", function() {
 	});
 snippet sui
-	suite('${1}', function() {
+options head
+	suite("${1}", function() {
 	});
 snippet te
-	test('${1}', function() {
+options head
+	test("${1}", function() {
 	});
 snippet ok
 	assert.ok(${1})
@@ -57,10 +61,16 @@ snippet ne
 	notEqual(${1});
 snippet th
 options word
-	throw new Error('${1}');
+	throw new Error("${1}");
+snippet asth
+options head
+    assert.throws(function() {
+        ${1}
+    });
 # Main
 snippet ifmain
-	if(!module.parent) {
+options head
+	if(module === process.mainModule) {
 		${1}
 	}
 # Function
@@ -80,5 +90,8 @@ options word
 	});
 # for
 snippet fori
+options head
 	for(var i = 0; i < ${1:1000}; i++) {
 	}
+snippet unused
+    // jshint unused: false
